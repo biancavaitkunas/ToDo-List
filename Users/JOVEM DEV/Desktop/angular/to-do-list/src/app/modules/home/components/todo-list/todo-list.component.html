@@ -1,0 +1,16 @@
+<section [ngClass]="{'loading': !taskList.length}"> <!--exibir imagem de fundo-->
+  <ul *ngIf="taskList.length"> <!--só vai exibir se tiver algo na lista-->
+    <li *ngFor="let item of taskList; let i = index">
+      <input type="checkbox" [(ngModel)]="item.checked" /> <!--checked e value sao properties bindings para mostrar depois as propriedades-->
+      <input type="text" [(ngModel)]="item.name" [ngClass]="{checked: item.checked}" (keyup)="validationInput(item.name, 1)" />
+       <!--ngClass = muda a classe do item caso esteja checado-->
+       <!--keyup = quando clica em cima faz validacao se a tarefa esta vazia, se estiver emite mensagem perguntando se deseja apagar-->
+      <button (click)="deleteItem(i)">
+        <img src="../../../../../assets/icons/icons8-lixeira.svg" alt="" style="width: 20px;"/>
+      </button>
+    </li>
+  </ul>
+</section>
+
+<app-input-add-itens (emiteItemTask)="setEmitTask($event)"></app-input-add-itens>
+<app-todo-button-delete-all *ngIf="taskList.length" (click)="deleteAll()"></app-todo-button-delete-all>
